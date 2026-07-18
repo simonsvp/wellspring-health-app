@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Focus · WellSpring</title>
+</head>
+<body>
+	<div id="app-nav"></div>
+	<main>
+		<section class="page-head">
+			<div class="container text-center">
+				<div class="eyebrow">Clear the noise</div>
+				<h1>Make room for one thing.</h1>
+				<p class="page-intro mx-auto">Pick a comfortable interval, set an intention, and let the timer hold the boundary.</p>
+				<div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+					<button class="filter-chip active" type="button" data-duration="5">5 min reset</button>
+					<button class="filter-chip" type="button" data-duration="25">25 min focus</button>
+					<button class="filter-chip" type="button" data-duration="50">50 min deep work</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="section pt-2">
+			<div class="container">
+				<div class="row g-4 align-items-stretch">
+					<div class="col-lg-7">
+						<div class="soft-card h-100">
+							<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+								<div>
+									<div class="eyebrow">Current intention</div>
+									<h2 class="h4 mb-1" id="current-intent">Write one intention before starting</h2>
+									<p class="text-secondary mb-0">The timer stays simple. Your attention stays on one thing.</p>
+								</div>
+								<span class="pill" id="status-pill"><i class="bi bi-dot"></i> Ready</span>
+							</div>
+
+							<div class="focus-ring">
+								<div class="timer-content">
+									<div id="timer" class="timer">25:00</div>
+									<small id="remaining-label" class="text-secondary">minutes remaining</small>
+								</div>
+							</div>
+
+							<div class="mt-4">
+								<label for="focus-note" class="form-label fw-bold">Focus intention</label>
+								<input id="focus-note" class="form-control form-control-lg" placeholder="Finish the report, review code, read chapter 3">
+							</div>
+
+							<div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+								<button id="start" class="btn btn-primary px-4">Start focus</button>
+								<button id="reset" class="btn btn-outline-primary px-4">Reset</button>
+							</div>
+
+							<p class="text-secondary text-center mt-4 mb-0">Leave this tab open and let the countdown protect the boundary.</p>
+						</div>
+					</div>
+
+					<div class="col-lg-5 d-grid gap-4">
+						<div class="soft-card">
+							<div class="eyebrow">Session stats</div>
+							<div class="row g-3 mt-1">
+								<div class="col-6">
+									<div class="soft-card h-100 text-center p-3">
+										<div class="metric" id="focus-count">0</div>
+										<small class="text-secondary">sessions logged</small>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="soft-card h-100 text-center p-3">
+										<div class="metric" id="focus-minutes">0</div>
+										<small class="text-secondary">minutes this week</small>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="soft-card h-100 p-3 d-flex align-items-center justify-content-between gap-3">
+										<div>
+											<div class="fw-bold">Longest preset</div>
+											<small class="text-secondary">Best completed interval</small>
+										</div>
+										<div class="metric mb-0" id="focus-best">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="soft-card">
+							<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+								<div>
+									<div class="eyebrow">Recent sessions</div>
+									<h2 class="h4 mb-0">Your rhythm</h2>
+								</div>
+								<span class="pill"><i class="bi bi-graph-up"></i> Live log</span>
+							</div>
+							<div id="session-list"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div id="app-footer"></div>
+	<script type="module" src="/src/js/pages/focus.js"></script>
+</body>
+</html>
