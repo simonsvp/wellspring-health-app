@@ -4,45 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="WellSpring helps you focus, move, rest, and build healthy daily rituals.">
-  <title>WellSpring · Your everyday reset</title>
+  <title>WellSpring | Your everyday reset</title>
 </head>
 <body>
   <div id="app-nav"></div>
   <main>
-    <section class="hero">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-7">
-            <div class="eyebrow">Your everyday reset</div>
-            <h1>Feel clearer.<br>Live steadier.</h1>
+    <section class="hero home-hero">
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
+      <div class="container position-relative">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <div class="eyebrow"><i class="bi bi-stars me-2"></i>Your everyday reset</div>
+            <h1>Feel clearer.<br><span class="hero-accent">Live steadier.</span></h1>
             <p class="hero-copy mt-4">One calm place for focused work, restorative sound, joyful movement, and thoughtful tea rituals.</p>
             <div class="d-flex flex-wrap gap-2 mt-4">
-              <a class="btn btn-primary btn-lg" href="focus.html">Start a focus session</a>
-              <a class="btn btn-outline-primary btn-lg" href="#explore">Explore wellbeing</a>
+              <a class="btn btn-primary btn-lg px-4" href="focus.html"><i class="bi bi-play-fill me-1"></i>Start focus</a>
+              <a class="btn btn-outline-primary btn-lg px-4" href="#explore">Explore wellbeing</a>
+            </div>
+            <div class="hero-trust mt-4">
+              <span><i class="bi bi-check-circle-fill"></i> Simple daily actions</span>
+              <span><i class="bi bi-check-circle-fill"></i> Your own pace</span>
             </div>
           </div>
-          <div class="col-lg-5">
-            <div class="hero-orb">
-              <i class="bi bi-flower2"></i>
-              <div class="floating-note note-one"><i class="bi bi-check-circle-fill text-success"></i> 25 min focused</div>
-              <div class="floating-note note-two"><i class="bi bi-brightness-high-fill text-warning"></i> Gentle progress</div>
+          <div class="col-lg-6">
+            <div class="today-board">
+              <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+                <div><div class="eyebrow">Today's rhythm</div><h2 class="h3 mb-1">Good morning</h2><p class="text-secondary mb-0">Choose one small win to begin.</p></div>
+                <div class="day-badge"><i class="bi bi-sun-fill"></i><span>Bright<br><strong>Day 1</strong></span></div>
+              </div>
+              <div class="wellness-score mb-4">
+                <div class="score-ring"><span>72</span><small>%</small></div>
+                <div class="flex-grow-1"><div class="d-flex justify-content-between mb-2"><strong>Daily balance</strong><span class="pill">On track</span></div><p class="text-secondary small mb-0">Two of your three gentle goals are ready.</p></div>
+              </div>
+              <div class="today-grid">
+                <a href="focus.html" class="today-action action-focus"><span class="mini-icon"><i class="bi bi-bullseye"></i></span><span><small>Focus</small><strong>25 minutes</strong></span><i class="bi bi-arrow-up-right"></i></a>
+                <a href="activities.html" class="today-action action-move"><span class="mini-icon"><i class="bi bi-person-walking"></i></span><span><small>Move</small><strong>10 minutes</strong></span><i class="bi bi-arrow-up-right"></i></a>
+                <a href="music.html" class="today-action action-calm"><span class="mini-icon"><i class="bi bi-headphones"></i></span><span><small>Unwind</small><strong>Forest sounds</strong></span><i class="bi bi-arrow-up-right"></i></a>
+              </div>
+              <div class="weekly-strip mt-4"><span class="week-day complete">M</span><span class="week-day complete">T</span><span class="week-day active">W</span><span class="week-day">T</span><span class="week-day">F</span><span class="week-day">S</span><span class="week-day">S</span><small>2-day rhythm</small></div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section id="explore" class="section">
+
+    <section class="home-stats" aria-label="Wellness highlights">
+      <div class="container"><div class="stats-shell">
+        <div class="home-stat"><i class="bi bi-clock-history"></i><div><strong>25 min</strong><span>ideal focus reset</span></div></div>
+        <div class="home-stat"><i class="bi bi-heart-pulse"></i><div><strong>4 paths</strong><span>to support your day</span></div></div>
+        <div class="home-stat"><i class="bi bi-shield-check"></i><div><strong>Private</strong><span>personal reflections</span></div></div>
+      </div></div>
+    </section>
+
+    <section id="explore" class="section feature-section">
       <div class="container">
-        <div class="eyebrow">Four paths, one healthier rhythm</div>
-        <h2 class="display-5 fw-bold mb-4">Choose what you need today.</h2>
+        <div class="row align-items-end mb-4"><div class="col-lg-7"><div class="eyebrow">Four paths, one healthier rhythm</div><h2 class="display-5 fw-bold mb-0">Choose what you need today.</h2></div><div class="col-lg-5"><p class="text-secondary mb-1 mt-3 mt-lg-0">No pressure and no perfect routine. Start with the area that would make today feel a little better.</p></div></div>
         <div class="row g-4">
-          <div class="col-md-6 col-xl-3"><article class="soft-card"><div class="icon-tile"><i class="bi bi-bullseye"></i></div><h3 class="h4 mt-3">Improve focus</h3><p class="text-secondary">A clean timer and simple history for distraction-free sessions.</p><a class="card-link" href="focus.html">Find your flow →</a></article></div>
-          <div class="col-md-6 col-xl-3"><article class="soft-card"><div class="icon-tile"><i class="bi bi-soundwave"></i></div><h3 class="h4 mt-3">Healthy music</h3><p class="text-secondary">Ambient soundscapes for work, rest, and breathing space.</p><a class="card-link" href="music.html">Listen now →</a></article></div>
-          <div class="col-md-6 col-xl-3"><article class="soft-card"><div class="icon-tile"><i class="bi bi-bicycle"></i></div><h3 class="h4 mt-3">Move actively</h3><p class="text-secondary">Accessible activities that fit into a real day.</p><a class="card-link" href="activities.html">Get moving →</a></article></div>
-          <div class="col-md-6 col-xl-3"><article class="soft-card"><div class="icon-tile"><i class="bi bi-cup-hot"></i></div><h3 class="h4 mt-3">Herbs & tea</h3><p class="text-secondary">Safe, approachable inspiration for mindful rituals.</p><a class="card-link" href="herbs.html">Browse the garden →</a></article></div>
+          <div class="col-md-6 col-xl-3"><article class="soft-card feature-card feature-focus"><div class="card-number">01</div><div class="icon-tile"><i class="bi bi-bullseye"></i></div><span class="pill mt-4">Clarity</span><h3 class="h4 mt-2">Improve focus</h3><p class="text-secondary">A clean timer and simple history for distraction-free sessions.</p><a class="card-link stretched-link" href="focus.html">Find your flow <i class="bi bi-arrow-right"></i></a></article></div>
+          <div class="col-md-6 col-xl-3"><article class="soft-card feature-card feature-music"><div class="card-number">02</div><div class="icon-tile"><i class="bi bi-soundwave"></i></div><span class="pill mt-4">Calm</span><h3 class="h4 mt-2">Healthy music</h3><p class="text-secondary">Ambient soundscapes for work, rest, and breathing space.</p><a class="card-link stretched-link" href="music.html">Listen now <i class="bi bi-arrow-right"></i></a></article></div>
+          <div class="col-md-6 col-xl-3"><article class="soft-card feature-card feature-move"><div class="card-number">03</div><div class="icon-tile"><i class="bi bi-bicycle"></i></div><span class="pill mt-4">Energy</span><h3 class="h4 mt-2">Move actively</h3><p class="text-secondary">Accessible activities that fit naturally into a real day.</p><a class="card-link stretched-link" href="activities.html">Get moving <i class="bi bi-arrow-right"></i></a></article></div>
+          <div class="col-md-6 col-xl-3"><article class="soft-card feature-card feature-herbs"><div class="card-number">04</div><div class="icon-tile"><i class="bi bi-cup-hot"></i></div><span class="pill mt-4">Ritual</span><h3 class="h4 mt-2">Herbs & tea</h3><p class="text-secondary">Safe, approachable inspiration for thoughtful daily rituals.</p><a class="card-link stretched-link" href="herbs.html">Browse the garden <i class="bi bi-arrow-right"></i></a></article></div>
         </div>
       </div>
     </section>
+
+    <section class="section pt-2"><div class="container"><div class="home-cta"><div><div class="eyebrow text-white-50">A small step is still progress</div><h2 class="display-6 fw-bold text-white mb-2">Ready for five focused minutes?</h2><p class="mb-0 text-white-50">Begin with the shortest reset and build from there.</p></div><a href="focus.html" class="btn btn-light btn-lg">Begin a reset <i class="bi bi-arrow-right ms-1"></i></a></div></div></section>
   </main>
   <div id="app-footer"></div>
   <script type="module" src="/src/js/pages/home.js"></script>
