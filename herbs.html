@@ -1,1 +1,36 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Herbs & tea · WellSpring</title></head><body><div id="app-nav"></div><main><section class="page-head"><div class="container"><div class="eyebrow">A slower ritual</div><h1>Steep. Sip. Exhale.</h1><p class="page-intro">Explore familiar herbs and caffeine-free infusions as part of a mindful daily routine.</p></div></section><section class="section pt-2"><div class="container"><div class="disclaimer mb-4"><strong><i class="bi bi-info-circle"></i> Safety first.</strong> Herbal products can interact with medicines or be unsuitable during pregnancy and for some health conditions. Ask a qualified healthcare professional when unsure.</div><div id="herb-grid" class="row g-4"></div></div></section></main><div id="app-footer"></div><script type="module" src="/src/js/pages/herbs.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Herbs and tea | WellSpring</title>
+</head>
+<body>
+  <div id="app-nav"></div>
+  <main>
+    <section class="page-head herbs-head">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7"><div class="eyebrow">A slower ritual</div><h1>Steep. Sip. Exhale.</h1><p class="page-intro">Explore familiar caffeine-free infusions as part of a mindful daily routine, without treating them as medicine.</p></div>
+          <div class="col-lg-5"><div class="tea-ritual"><div class="tea-steam"><i class="bi bi-cup-hot"></i></div><div><strong>A simple pause</strong><small>Boil water. Put the screen down. Notice the aroma.</small></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pt-2">
+      <div class="container">
+        <div class="disclaimer safety-panel mb-4"><i class="bi bi-shield-exclamation"></i><div><strong>Safety first - this guide is educational, not medical advice.</strong><p class="mb-1">Herbs and supplements can cause side effects, allergies, or medicine interactions. Pregnancy, breastfeeding, health conditions, and medicines can change what is safe for you.</p><a href="https://www.nccih.nih.gov/health/know-science/how-medications-and-supplements-can-interact/learn-more" target="_blank" rel="noopener">Read official interaction guidance from NCCIH <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+
+        <div class="herb-toolbar mb-4">
+          <div class="activity-search"><i class="bi bi-search"></i><input id="herb-search" type="search" placeholder="Search herbs or rituals" aria-label="Search herbs"></div>
+          <label class="favorite-filter"><input id="favorites-only" type="checkbox"><span><i class="bi bi-heart"></i> Favorites only</span></label>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><div class="eyebrow">Tea shelf</div><h2 class="h3 mb-0">Choose a gentle ritual</h2></div><span class="text-secondary"><strong id="herb-count">0</strong> herbs</span></div>
+        <div id="herb-grid" class="row g-4" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+  <div id="app-footer"></div>
+  <script type="module" src="/src/js/pages/herbs.js"></script>
+</body>
+</html>
