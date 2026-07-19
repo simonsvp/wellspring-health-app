@@ -3,12 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Focus · WellSpring</title>
+	<title>Focus | WellSpring</title>
 </head>
 <body>
 	<div id="app-nav"></div>
 	<main>
-		<section class="page-head">
+		<section class="page-head focus-page-head">
 			<div class="container text-center">
 				<div class="eyebrow">Clear the noise</div>
 				<h1>Make room for one thing.</h1>
@@ -18,37 +18,43 @@
 					<button class="filter-chip" type="button" data-duration="25">25 min focus</button>
 					<button class="filter-chip" type="button" data-duration="50">50 min deep work</button>
 				</div>
+				<div class="focus-promise mt-3"><i class="bi bi-shield-check"></i> No notifications. No pressure. Just this moment.</div>
 			</div>
 		</section>
 
-		<section class="section pt-2">
+		<section class="section pt-2 focus-workspace">
 			<div class="container">
 				<div class="row g-4 align-items-stretch">
 					<div class="col-lg-7">
-						<div class="soft-card h-100">
+						<div class="soft-card h-100 focus-timer-card">
 							<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
 								<div>
 									<div class="eyebrow">Current intention</div>
 									<h2 class="h4 mb-1" id="current-intent">Write one intention before starting</h2>
 									<p class="text-secondary mb-0">The timer stays simple. Your attention stays on one thing.</p>
 								</div>
-								<span class="pill" id="status-pill"><i class="bi bi-dot"></i> Ready</span>
+								<span class="pill focus-status" id="status-pill" aria-live="polite"><i class="bi bi-dot"></i> Ready</span>
 							</div>
 
-							<div class="focus-ring">
+							<div class="focus-ring-wrap">
+							<div class="focus-ring" role="timer" aria-label="Focus countdown">
 								<div class="timer-content">
-									<div id="timer" class="timer">25:00</div>
+									<i class="bi bi-flower1 timer-flower"></i>
+									<div id="timer" class="timer" aria-live="off">25:00</div>
 									<small id="remaining-label" class="text-secondary">minutes remaining</small>
 								</div>
+							</div>
+							<span class="orbit-dot orbit-one"></span><span class="orbit-dot orbit-two"></span>
 							</div>
 
 							<div class="mt-4">
 								<label for="focus-note" class="form-label fw-bold">Focus intention</label>
-								<input id="focus-note" class="form-control form-control-lg" placeholder="Finish the report, review code, read chapter 3">
+								<input id="focus-note" class="form-control form-control-lg" maxlength="80" placeholder="Finish the report, review code, read chapter 3">
+								<div class="d-flex justify-content-between mt-2"><small class="text-secondary"><i class="bi bi-keyboard"></i> Space starts or pauses the timer</small><small class="text-secondary"><span id="intent-count">0</span>/80</small></div>
 							</div>
 
 							<div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
-								<button id="start" class="btn btn-primary px-4">Start focus</button>
+								<button id="start" class="btn btn-primary btn-lg px-4"><i class="bi bi-play-fill me-1"></i><span>Start focus</span></button>
 								<button id="reset" class="btn btn-outline-primary px-4">Reset</button>
 							</div>
 
@@ -57,23 +63,23 @@
 					</div>
 
 					<div class="col-lg-5 d-grid gap-4">
-						<div class="soft-card">
+						<div class="soft-card focus-stats-card">
 							<div class="eyebrow">Session stats</div>
 							<div class="row g-3 mt-1">
 								<div class="col-6">
-									<div class="soft-card h-100 text-center p-3">
+									<div class="focus-stat h-100 text-center p-3">
 										<div class="metric" id="focus-count">0</div>
 										<small class="text-secondary">sessions logged</small>
 									</div>
 								</div>
 								<div class="col-6">
-									<div class="soft-card h-100 text-center p-3">
+									<div class="focus-stat h-100 text-center p-3">
 										<div class="metric" id="focus-minutes">0</div>
 										<small class="text-secondary">minutes this week</small>
 									</div>
 								</div>
 								<div class="col-12">
-									<div class="soft-card h-100 p-3 d-flex align-items-center justify-content-between gap-3">
+									<div class="focus-stat h-100 p-3 d-flex align-items-center justify-content-between gap-3">
 										<div>
 											<div class="fw-bold">Longest preset</div>
 											<small class="text-secondary">Best completed interval</small>
@@ -84,7 +90,7 @@
 							</div>
 						</div>
 
-						<div class="soft-card">
+						<div class="soft-card session-log-card">
 							<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
 								<div>
 									<div class="eyebrow">Recent sessions</div>

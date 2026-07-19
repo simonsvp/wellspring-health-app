@@ -16,10 +16,12 @@ const sessionList = document.querySelector('#session-list');
 const focusCount = document.querySelector('#focus-count');
 const focusMinutes = document.querySelector('#focus-minutes');
 const focusBest = document.querySelector('#focus-best');
+const intentCount = document.querySelector('#intent-count');
 
 const savedNote = localStorage.getItem('wellspring-focus-note') || '';
 noteInput.value = savedNote;
 currentIntent.textContent = savedNote.trim() || 'Write one intention before starting';
+intentCount.textContent = String(savedNote.length);
 
 let total = 25 * 60;
 let left = total;
@@ -44,6 +46,11 @@ function paint() {
 	display.textContent = formatTime(left);
 	ring.style.setProperty('--progress', `${100 - (left / total * 100)}%`);
 	remainingLabel.textContent = left === 1 ? 'minute remaining' : 'minutes remaining';
+	document.title = timer ? `${formatTime(left)} | Focus | WellSpring` : 'Focus | WellSpring';
+}
+
+function setStartButton(label, icon = 'bi-play-fill') {
+	startButton.innerHTML = `<i class="bi ${icon} me-1"></i><span>${label}</span>`;
 }
 
 function updateStats() {
@@ -89,7 +96,7 @@ function resetTimer(message = 'Ready') {
 	clearInterval(timer);
 	timer = null;
 	left = total;
-	startButton.textContent = 'Start focus';
+	setStartButton('Start focus');
 	setStatus(message);
 	paint();
 }
@@ -98,7 +105,7 @@ function chooseDuration(minutes, announce = true) {
 	clearInterval(timer);
 	timer = null;
 	total = left = minutes * 60;
-	startButton.textContent = 'Start focus';
+	setStartButton('Start focus');
 	setActivePreset(minutes);
 	setStatus('Ready');
 	paint();
@@ -112,7 +119,7 @@ async function finishSession() {
 	timer = null;
 	left = 0;
 	paint();
-	startButton.textContent = 'Start again';
+	setStartButton('Start again', 'bi-arrow-repeat');
 	setStatus('Session saved');
 	await save('focus_sessions', {duration_minutes: total / 60, completed: true});
 	toast('Focus session complete!');
@@ -129,18 +136,20 @@ noteInput.addEventListener('input', () => {
 	const note = noteInput.value.trim();
 	localStorage.setItem('wellspring-focus-note', noteInput.value);
 	currentIntent.textContent = note || 'Write one intention before starting';
+	intentCount.textContent = String(noteInput.value.length);
 });
 
-startButton.addEventListener('click', () => {
+function toggleTimer() {
 	if (timer) {
 		clearInterval(timer);
 		timer = null;
-		startButton.textContent = 'Resume';
+		setStartButton('Resume');
 		setStatus('Paused');
+		paint();
 		return;
 	}
 
-	startButton.textContent = 'Pause';
+	setStartButton('Pause', 'bi-pause-fill');
 	setStatus(left === total ? 'In progress' : 'Resumed');
 	timer = setInterval(() => {
 		left -= 1;
@@ -149,6 +158,15 @@ startButton.addEventListener('click', () => {
 			finishSession();
 		}
 	}, 1000);
+}
+
+startButton.addEventListener('click', toggleTimer);
+
+document.addEventListener('keydown', event => {
+	if (event.code === 'Space' && document.activeElement !== noteInput) {
+		event.preventDefault();
+		toggleTimer();
+	}
 });
 
 resetButton.addEventListener('click', () => {
