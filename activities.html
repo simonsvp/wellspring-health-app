@@ -1,1 +1,50 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Activities · WellSpring</title></head><body><div id="app-nav"></div><main><section class="page-head"><div class="container"><div class="eyebrow">Move your way</div><h1>Energy loves motion.</h1><p class="page-intro">Short, achievable activities for mobility, strength, cardio, and mindful movement.</p><div class="d-flex flex-wrap gap-2 mt-4"><button class="filter-chip active" data-filter="All">All</button><button class="filter-chip" data-filter="Mobility">Mobility</button><button class="filter-chip" data-filter="Cardio">Cardio</button><button class="filter-chip" data-filter="Strength">Strength</button><button class="filter-chip" data-filter="Mindful">Mindful</button></div></div></section><section class="section pt-2"><div class="container"><div id="activity-grid" class="row g-4"></div></div></section></main><div id="app-footer"></div><script type="module" src="/src/js/pages/activities.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Activities | WellSpring</title>
+</head>
+<body>
+  <div id="app-nav"></div>
+  <main>
+    <section class="page-head activities-head">
+      <div class="container">
+        <div class="row align-items-end g-4">
+          <div class="col-lg-7">
+            <div class="eyebrow">Move your way</div>
+            <h1>Energy loves motion.</h1>
+            <p class="page-intro">Short, achievable activities for mobility, strength, cardio, and mindful movement.</p>
+          </div>
+          <div class="col-lg-5">
+            <div class="movement-goal">
+              <div class="d-flex justify-content-between align-items-center mb-2"><span><i class="bi bi-activity me-2"></i>Today's movement</span><strong><span id="goal-minutes">0</span> / 30 min</strong></div>
+              <div class="movement-track"><span id="goal-progress"></span></div>
+              <small id="goal-message">A little movement can change the whole day.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pt-2">
+      <div class="container">
+        <div class="activity-toolbar mb-4">
+          <div class="activity-search"><i class="bi bi-search"></i><input id="activity-search" type="search" placeholder="Search activities" aria-label="Search activities"></div>
+          <div class="d-flex flex-wrap gap-2" aria-label="Activity categories">
+            <button class="filter-chip active" data-filter="All">All</button>
+            <button class="filter-chip" data-filter="Mobility">Mobility</button>
+            <button class="filter-chip" data-filter="Cardio">Cardio</button>
+            <button class="filter-chip" data-filter="Strength">Strength</button>
+            <button class="filter-chip" data-filter="Mindful">Mindful</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3"><h2 class="h4 mb-0">Find your next move</h2><span class="text-secondary"><strong id="activity-count">0</strong> activities</span></div>
+        <div id="activity-grid" class="row g-4" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+  <div id="app-footer"></div>
+  <script type="module" src="/src/js/pages/activities.js"></script>
+</body>
+</html>
