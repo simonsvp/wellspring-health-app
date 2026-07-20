@@ -1,1 +1,108 @@
-import{mountLayout,toast}from'../components/layout.js';import{signIn,signUp}from'../services/auth.js';mountLayout();let mode='login';const title=document.querySelector('#auth-title'),name=document.querySelector('#name-wrap'),toggle=document.querySelector('#toggle-auth');toggle.onclick=()=>{mode=mode==='login'?'signup':'login';title.textContent=mode==='login'?'Welcome back':'Create your account';name.classList.toggle('d-none',mode==='login');document.querySelector('#submit-auth').textContent=mode==='login'?'Sign in':'Create account';toggle.textContent=mode==='login'?'Need an account? Sign up':'Already registered? Sign in'};document.querySelector('#auth-form').onsubmit=async e=>{e.preventDefault();try{const email=e.target.email.value,password=e.target.password.value;if(mode==='login')await signIn(email,password);else await signUp(e.target.fullName.value,email,password);location.href='profile.html'}catch(err){toast(err.message,'danger')}};
+import { mountLayout } from '../components/layout.js';
+import { signIn, signUp } from '../services/auth.js';
+
+mountLayout();
+
+const form = document.querySelector('#auth-form');
+const nameWrap = document.querySelector('#name-wrap');
+const fullName = document.querySelector('#fullName');
+const email = document.querySelector('#email');
+const password = document.querySelector('#password');
+const submitButton = document.querySelector('#submit-auth');
+const message = document.querySelector('#auth-message');
+const strength = document.querySelector('#password-strength');
+const tabs = {
+  login: document.querySelector('#login-tab'),
+  signup: document.querySelector('#signup-tab')
+};
+let mode = 'login';
+
+function setMode(nextMode) {
+  mode = nextMode;
+  const signingUp = mode === 'signup';
+  document.title = signingUp ? 'Create account · WellSpring' : 'Sign in · WellSpring';
+  document.querySelector('#auth-title').textContent = signingUp ? 'Create your account' : 'Welcome back';
+  document.querySelector('#auth-subtitle').textContent = signingUp ? 'Begin a healthier rhythm with one small step.' : 'Sign in to continue your healthier rhythm.';
+  nameWrap.classList.toggle('d-none', !signingUp);
+  fullName.required = signingUp;
+  password.autocomplete = signingUp ? 'new-password' : 'current-password';
+  strength.classList.toggle('d-none', !signingUp);
+  submitButton.querySelector('span').textContent = signingUp ? 'Create account' : 'Sign in';
+  Object.entries(tabs).forEach(([key, tab]) => {
+    const active = key === mode;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
+  });
+  form.classList.remove('was-validated');
+  hideMessage();
+}
+
+function hideMessage() {
+  message.classList.add('d-none');
+  message.textContent = '';
+}
+
+function showMessage(text) {
+  message.textContent = text;
+  message.classList.remove('d-none');
+}
+
+function setLoading(loading) {
+  submitButton.disabled = loading;
+  if (loading) {
+    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span>Just a moment…</span>';
+  } else {
+    submitButton.innerHTML = `<span>${mode === 'signup' ? 'Create account' : 'Sign in'}</span><i class="bi bi-arrow-right"></i>`;
+  }
+}
+
+function updateStrength() {
+  const value = password.value;
+  let score = 0;
+  if (value.length >= 6) score++;
+  if (/[A-Z]/.test(value) && /[a-z]/.test(value)) score++;
+  if (/\d|[^\w]/.test(value)) score++;
+  const labels = ['Start typing a password', 'Basic', 'Good', 'Strong'];
+  strength.dataset.score = String(score);
+  strength.querySelector('small').textContent = labels[value ? score : 0];
+}
+
+async function authenticate(authMode = mode) {
+  hideMessage();
+  if (!form.checkValidity()) {
+    form.classList.add('was-validated');
+    return;
+  }
+  setLoading(true);
+  try {
+    if (authMode === 'signup') await signUp(fullName.value.trim(), email.value.trim(), password.value);
+    else await signIn(email.value.trim(), password.value);
+    location.href = 'profile.html';
+  } catch (error) {
+    showMessage(error.message || 'We could not complete your request. Please try again.');
+    setLoading(false);
+  }
+}
+
+tabs.login.addEventListener('click', () => setMode('login'));
+tabs.signup.addEventListener('click', () => setMode('signup'));
+password.addEventListener('input', updateStrength);
+document.querySelector('#show-password').addEventListener('click', event => {
+  const showing = password.type === 'text';
+  password.type = showing ? 'password' : 'text';
+  event.currentTarget.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+  event.currentTarget.innerHTML = `<i class="bi ${showing ? 'bi-eye' : 'bi-eye-slash'}"></i>`;
+});
+
+document.querySelectorAll('[data-demo]').forEach(button => button.addEventListener('click', async () => {
+  const admin = button.dataset.demo === 'admin';
+  setMode('login');
+  email.value = admin ? 'admin@example.com' : 'member@example.com';
+  password.value = 'demo123';
+  await authenticate('login');
+}));
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  authenticate();
+});
