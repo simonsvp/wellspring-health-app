@@ -1,1 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Profile · WellSpring</title></head><body><div id="app-nav"></div><main><section class="page-head"><div class="container"><div class="eyebrow">Your space</div><h1>Progress feels personal.</h1></div></section><section class="section pt-2"><div class="container"><div class="row g-4"><div class="col-lg-5"><div class="soft-card"><div id="avatar" class="avatar mb-3"><i class="bi bi-person"></i></div><h2 id="profile-name" class="h3"></h2><p id="profile-email" class="text-secondary"></p><form id="photo-form"><label class="form-label" for="photo">Profile photo</label><input id="photo" name="photo" type="file" accept="image/*" class="form-control" required><button class="btn btn-primary mt-3">Upload photo</button></form></div></div><div class="col-lg-7"><div class="soft-card"><h2 class="h4">This week's rhythm</h2><div class="row g-3 mt-1"><div class="col-4"><div class="eyebrow">Focus</div><div class="metric">4</div><small>sessions</small></div><div class="col-4"><div class="eyebrow">Move</div><div class="metric">3</div><small>activities</small></div><div class="col-4"><div class="eyebrow">Reflect</div><div class="metric">2</div><small>notes</small></div></div><hr><a class="btn btn-outline-primary" href="admin.html"><i class="bi bi-shield-check"></i> Admin panel</a></div></div></div></div></section></main><div id="app-footer"></div><script type="module" src="/src/js/pages/profile.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile · WellSpring</title>
+  <link rel="stylesheet" href="/src/css/profile.css">
+</head>
+<body>
+  <div id="app-nav"></div>
+  <main>
+    <section class="page-head profile-head">
+      <div class="container">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3">
+          <div><div class="eyebrow">Your personal space</div><h1>Progress feels personal.</h1><p class="page-intro">Notice your rhythm, celebrate small wins, and choose what comes next.</p></div>
+          <span id="member-badge" class="member-badge"><i class="bi bi-patch-check-fill"></i> WellSpring member</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pt-2">
+      <div class="container">
+        <div class="profile-grid">
+          <aside class="profile-card">
+            <div class="profile-identity">
+              <div id="avatar" class="profile-avatar"><i class="bi bi-person"></i></div>
+              <label for="photo" class="avatar-action" aria-label="Choose profile photo"><i class="bi bi-camera"></i></label>
+              <input id="photo" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            </div>
+            <div class="text-center">
+              <h2 id="profile-name" class="h3 mb-1">WellSpring member</h2>
+              <p id="profile-email" class="text-muted mb-2"></p>
+              <span id="account-role" class="pill">Member account</span>
+            </div>
+            <hr>
+            <form id="profile-form">
+              <label for="display-name" class="form-label">Display name</label>
+              <input id="display-name" class="form-control" maxlength="60" required>
+              <label for="wellness-intention" class="form-label mt-3">My wellbeing intention</label>
+              <textarea id="wellness-intention" class="form-control" rows="3" maxlength="160" placeholder="What would you like to make space for?"></textarea>
+              <button class="btn btn-primary w-100 mt-3"><i class="bi bi-check2-circle me-2"></i>Save profile</button>
+            </form>
+            <small class="profile-privacy"><i class="bi bi-shield-lock"></i> Your profile details are private.</small>
+          </aside>
+
+          <div class="profile-main">
+            <section class="profile-welcome">
+              <div><div class="eyebrow">Today's encouragement</div><h2 id="welcome-message">Your rhythm is taking shape.</h2><p>Consistency grows from returning, not from being perfect.</p></div>
+              <div class="rhythm-ring" id="rhythm-ring"><strong id="rhythm-score">0%</strong><span>weekly rhythm</span></div>
+            </section>
+
+            <section aria-labelledby="progress-title">
+              <div class="section-title"><div><div class="eyebrow">Activity snapshot</div><h2 id="progress-title" class="h3 mt-2">This week's rhythm</h2></div><span id="active-days" class="pill">0 active days</span></div>
+              <div class="stat-grid">
+                <a class="profile-stat" href="focus.html"><span class="stat-icon focus"><i class="bi bi-bullseye"></i></span><span><small>Focus</small><strong id="focus-total">0 min</strong><em id="focus-detail">No sessions yet</em></span><i class="bi bi-arrow-up-right"></i></a>
+                <a class="profile-stat" href="activities.html"><span class="stat-icon move"><i class="bi bi-person-walking"></i></span><span><small>Movement</small><strong id="move-total">0 min</strong><em id="move-detail">No activities yet</em></span><i class="bi bi-arrow-up-right"></i></a>
+                <a class="profile-stat" href="journal.html"><span class="stat-icon reflect"><i class="bi bi-journal-heart"></i></span><span><small>Reflections</small><strong id="journal-total">0 notes</strong><em id="journal-detail">Start your journal</em></span><i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </section>
+
+            <section class="next-step" aria-labelledby="next-title">
+              <div><div class="eyebrow">A gentle next step</div><h2 id="next-title" class="h3 mt-2">Keep the momentum kind.</h2><p id="next-suggestion">A short focus session is a simple place to begin.</p></div>
+              <a id="next-action" class="btn btn-primary" href="focus.html">Start focus <i class="bi bi-arrow-right ms-2"></i></a>
+            </section>
+
+            <a id="admin-link" class="admin-access d-none" href="admin.html"><span><i class="bi bi-shield-check"></i><strong>Administration</strong><small>Review users, content, and platform activity.</small></span><i class="bi bi-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="app-footer"></div>
+  <script type="module" src="/src/js/pages/profile.js"></script>
+</body>
+</html>
