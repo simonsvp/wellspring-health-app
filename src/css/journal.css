@@ -1,0 +1,100 @@
+.journal-head {
+  background: linear-gradient(135deg, rgba(220, 233, 222, .65), rgba(237, 227, 239, .35));
+  border-bottom: 1px solid var(--line);
+}
+
+.journal-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.journal-summary div {
+  padding: 1.2rem;
+  text-align: center;
+  background: var(--paper);
+}
+
+.journal-summary strong {
+  display: block;
+  color: var(--leaf-dark);
+  font-size: 1.65rem;
+}
+
+.journal-summary span {
+  display: block;
+  margin-top: .2rem;
+  color: var(--muted);
+  font-size: .76rem;
+}
+
+.journal-editor,
+.journal-history {
+  transform: none !important;
+}
+
+.mood-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .65rem;
+}
+
+.mood-picker .mood-button {
+  display: grid;
+  place-items: center;
+  gap: .2rem;
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.mood-picker .mood-button span {
+  font-size: 1.55rem;
+}
+
+.journal-history { min-height: 560px; }
+
+.journal-entry {
+  margin-bottom: 1rem;
+  padding: 1.15rem;
+  background: rgba(255, 255, 255, .45);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--leaf);
+  border-radius: 0 18px 18px 0;
+}
+
+.journal-entry:last-child { margin-bottom: 0; }
+
+.journal-mood {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  background: var(--sage);
+  border-radius: 14px;
+  font-size: 1.45rem;
+}
+
+.journal-actions { display: flex; gap: .2rem; }
+.journal-actions .btn { border-radius: 10px; color: var(--muted); }
+.journal-actions .btn:hover { background: var(--sage); color: var(--leaf-dark); }
+.journal-copy { line-height: 1.65; white-space: pre-wrap; }
+.journal-empty { padding: 4rem 1rem; }
+.journal-empty > i { color: var(--leaf); font-size: 3rem; }
+
+@media (max-width: 576px) {
+  .journal-summary { grid-template-columns: 1fr; }
+  .journal-summary div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8rem 1rem;
+  }
+  .journal-summary strong { font-size: 1.25rem; }
+  .mood-picker { grid-template-columns: repeat(2, 1fr); }
+}
