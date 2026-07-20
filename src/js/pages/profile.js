@@ -14,7 +14,11 @@ if (!user) {
   const intentionInput = document.querySelector('#wellness-intention');
   const avatar = document.querySelector('#avatar');
   const name = user.user_metadata?.full_name || 'WellSpring member';
-  const isAdmin = user.role === 'admin';
+  let isAdmin = user.role === 'admin';
+  if (!isDemoMode) {
+    const { data: adminRole } = await supabase.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle();
+    isAdmin = Boolean(adminRole);
+  }
 
   document.querySelector('#profile-name').textContent = name;
   document.querySelector('#profile-email').textContent = user.email;
@@ -24,6 +28,7 @@ if (!user) {
   nameInput.value = name;
   intentionInput.value = user.user_metadata?.intention || '';
   showAvatar(user.user_metadata?.avatar_data);
+  if (!isDemoMode) loadRemoteAvatar(user.id);
 
   document.querySelector('#profile-form').addEventListener('submit', async event => {
     event.preventDefault();
@@ -59,12 +64,19 @@ if (!user) {
       return;
     }
     await supabase.from('profiles').update({ avatar_path: path }).eq('id', user.id);
-    const { data } = supabase.storage.from('avatars').getPublicUrl(path);
-    showAvatar(data.publicUrl);
+    const { data } = await supabase.storage.from('avatars').createSignedUrl(path, 60 * 60);
+    showAvatar(data?.signedUrl);
     toast('Profile photo uploaded');
   });
 
   loadProgress();
+}
+
+async function loadRemoteAvatar(userId) {
+  const { data: profile } = await supabase.from('profiles').select('avatar_path').eq('id', userId).maybeSingle();
+  if (!profile?.avatar_path) return;
+  const { data, error } = await supabase.storage.from('avatars').createSignedUrl(profile.avatar_path, 60 * 60);
+  if (!error) showAvatar(data.signedUrl);
 }
 
 function showAvatar(source) {

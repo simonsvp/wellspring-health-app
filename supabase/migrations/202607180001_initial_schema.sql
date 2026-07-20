@@ -16,5 +16,31 @@ alter table public.profiles enable row level security;alter table public.user_ro
 create policy "profiles readable by owner" on public.profiles for select using(id=auth.uid() or public.is_admin());create policy "profiles editable by owner" on public.profiles for update using(id=auth.uid());create policy "roles readable by owner" on public.user_roles for select using(user_id=auth.uid() or public.is_admin());
 create policy "activities public read" on public.activities for select using(true);create policy "tracks public read" on public.tracks for select using(true);create policy "herbs public read" on public.herbs for select using(true);create policy "admins manage activities" on public.activities for all using(public.is_admin()) with check(public.is_admin());create policy "admins manage tracks" on public.tracks for all using(public.is_admin()) with check(public.is_admin());create policy "admins manage herbs" on public.herbs for all using(public.is_admin()) with check(public.is_admin());
 create policy "users manage activity logs" on public.activity_logs for all using(user_id=auth.uid()) with check(user_id=auth.uid());create policy "users manage focus sessions" on public.focus_sessions for all using(user_id=auth.uid()) with check(user_id=auth.uid());create policy "users manage journal" on public.journal_entries for all using(user_id=auth.uid()) with check(user_id=auth.uid());
-insert into storage.buckets(id,name,public) values('avatars','avatars',false),('wellness-audio','wellness-audio',true) on conflict(id) do nothing;
-create policy "avatar owner upload" on storage.objects for insert to authenticated with check(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);create policy "avatar owner read" on storage.objects for select to authenticated using(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);create policy "public audio read" on storage.objects for select using(bucket_id='wellness-audio');create policy "admin audio manage" on storage.objects for all to authenticated using(bucket_id='wellness-audio' and public.is_admin()) with check(bucket_id='wellness-audio' and public.is_admin());
+insert into public.activities(id,title,category,minutes,level,icon) values
+(1,'Morning mobility','Mobility',10,'Easy','bi-person-arms-up'),
+(2,'Brisk outdoor walk','Cardio',30,'Easy','bi-signpost-split'),
+(3,'Bodyweight strength','Strength',25,'Medium','bi-lightning-charge'),
+(4,'Evening yoga flow','Mindful',20,'Easy','bi-heart-pulse'),
+(5,'Cycle adventure','Cardio',45,'Medium','bi-bicycle'),
+(6,'Desk reset','Mobility',5,'Easy','bi-universal-access');
+insert into public.tracks(id,title,kind,minutes) values
+(1,'Forest concentration','Nature',25),(2,'Rain on the window','Ambient',40),
+(3,'Soft piano study','Instrumental',32),(4,'Ocean breathing','Nature',18);
+insert into public.herbs(id,name,benefit,use,color) values
+(1,'Chamomile','Wind-down ritual','Steep 1 tsp for 5–7 minutes.','#e8d68c'),
+(2,'Peppermint','Fresh, caffeine-free break','Steep leaves for 5 minutes.','#9ac9a6'),
+(3,'Ginger','Warming daily infusion','Simmer sliced root for 10 minutes.','#e4a46f'),
+(4,'Rooibos','Naturally caffeine-free','Steep 1 tsp for 5–7 minutes.','#c98568');
+select setval(pg_get_serial_sequence('public.activities','id'),(select max(id) from public.activities));
+select setval(pg_get_serial_sequence('public.tracks','id'),(select max(id) from public.tracks));
+select setval(pg_get_serial_sequence('public.herbs','id'),(select max(id) from public.herbs));
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values
+('avatars','avatars',false,2097152,array['image/jpeg','image/png','image/webp']),
+('wellness-audio','wellness-audio',true,10485760,array['audio/mpeg','audio/ogg','audio/wav'])
+on conflict(id) do update set public=excluded.public,file_size_limit=excluded.file_size_limit,allowed_mime_types=excluded.allowed_mime_types;
+create policy "avatar owner upload" on storage.objects for insert to authenticated with check(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "avatar owner read" on storage.objects for select to authenticated using(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "avatar owner update" on storage.objects for update to authenticated using(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text) with check(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "avatar owner delete" on storage.objects for delete to authenticated using(bucket_id='avatars' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "public audio read" on storage.objects for select using(bucket_id='wellness-audio');
+create policy "admin audio manage" on storage.objects for all to authenticated using(bucket_id='wellness-audio' and public.is_admin()) with check(bucket_id='wellness-audio' and public.is_admin());

@@ -12,7 +12,7 @@
 .auth-benefits small { margin-top: .15rem; color: #9fb7ae; }
 .auth-form-side { padding: 3rem; }
 .auth-form-header h2 { margin: 1rem 0 .4rem; font-size: 2.2rem; font-weight: 800; }
-.auth-form-header p { color: var(--muted); }
+.auth-form-header p { margin-bottom: 1.7rem; color: var(--muted); }
 .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; margin: 1.7rem 0; padding: .3rem; background: var(--cream); border-radius: 14px; }
 .auth-tabs button { padding: .7rem; color: var(--muted); font-weight: 700; background: transparent; border: 0; border-radius: 11px; }
 .auth-tabs button.active { color: var(--leaf-dark); background: var(--paper); box-shadow: 0 3px 12px rgba(31,71,58,.08); }
@@ -30,6 +30,7 @@
 .password-strength[data-score="2"] span:nth-child(-n+2) { background: #73a777; }
 .password-strength[data-score="3"] span { background: var(--leaf); }
 .auth-message { margin-top: 1rem; padding: .8rem 1rem; color: #8a2d2d; background: #fff0f0; border: 1px solid #efcaca; border-radius: 12px; }
+.auth-message.success { color: var(--leaf-dark); background: var(--sage); border-color: rgba(47,107,85,.25); }
 .auth-divider { display: flex; align-items: center; gap: 1rem; margin: 1.6rem 0 1rem; color: var(--muted); font-size: .78rem; }
 .auth-divider::before,.auth-divider::after { flex: 1; height: 1px; content: ''; background: var(--line); }
 .demo-button { display: flex; width: 100%; min-height: 64px; gap: .75rem; align-items: center; padding: .7rem; text-align: left; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }

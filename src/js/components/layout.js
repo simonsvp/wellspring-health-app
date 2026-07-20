@@ -44,7 +44,7 @@ export async function mountLayout(active = '') {
             ${isDemoMode ? '<span class="pill d-none d-lg-inline-flex"><i class="bi bi-wifi-off"></i> Demo mode</span>' : ''}
             ${user
               ? `<a class="btn btn-outline-primary btn-sm" href="profile.html"><i class="bi bi-person"></i> ${user.user_metadata?.full_name?.split(' ')[0] || 'Profile'}</a><button id="logout" class="btn btn-primary btn-sm">Log out</button>`
-              : '<a class="btn btn-primary btn-sm" href="auth.html"><i class="bi bi-person me-1"></i>Sign in</a>'}
+              : '<a class="btn btn-outline-primary btn-sm" href="auth.html"><i class="bi bi-person me-1"></i>Sign in</a><a class="btn btn-primary btn-sm" href="auth.html?mode=signup">Create account</a>'}
           </div>
         </div>
       </div>

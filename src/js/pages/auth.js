@@ -1,5 +1,6 @@
 import { mountLayout } from '../components/layout.js';
 import { signIn, signUp } from '../services/auth.js';
+import { isDemoMode } from '../config.js';
 
 mountLayout();
 
@@ -8,14 +9,17 @@ const nameWrap = document.querySelector('#name-wrap');
 const fullName = document.querySelector('#fullName');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
+const confirmPassword = document.querySelector('#confirm-password');
+const confirmWrap = document.querySelector('#confirm-wrap');
 const submitButton = document.querySelector('#submit-auth');
 const message = document.querySelector('#auth-message');
 const strength = document.querySelector('#password-strength');
-const tabs = {
-  login: document.querySelector('#login-tab'),
-  signup: document.querySelector('#signup-tab')
-};
 let mode = 'login';
+
+if (!isDemoMode) {
+  document.querySelector('.demo-access').classList.add('d-none');
+  document.querySelector('.auth-note').classList.add('d-none');
+}
 
 function setMode(nextMode) {
   mode = nextMode;
@@ -25,14 +29,11 @@ function setMode(nextMode) {
   document.querySelector('#auth-subtitle').textContent = signingUp ? 'Begin a healthier rhythm with one small step.' : 'Sign in to continue your healthier rhythm.';
   nameWrap.classList.toggle('d-none', !signingUp);
   fullName.required = signingUp;
+  confirmPassword.required = signingUp;
+  confirmWrap.classList.toggle('d-none', !signingUp);
   password.autocomplete = signingUp ? 'new-password' : 'current-password';
   strength.classList.toggle('d-none', !signingUp);
   submitButton.querySelector('span').textContent = signingUp ? 'Create account' : 'Sign in';
-  Object.entries(tabs).forEach(([key, tab]) => {
-    const active = key === mode;
-    tab.classList.toggle('active', active);
-    tab.setAttribute('aria-selected', String(active));
-  });
   form.classList.remove('was-validated');
   hideMessage();
 }
@@ -42,8 +43,9 @@ function hideMessage() {
   message.textContent = '';
 }
 
-function showMessage(text) {
+function showMessage(text, type = 'danger') {
   message.textContent = text;
+  message.classList.toggle('success', type === 'success');
   message.classList.remove('d-none');
 }
 
@@ -69,14 +71,22 @@ function updateStrength() {
 
 async function authenticate(authMode = mode) {
   hideMessage();
+  confirmPassword.setCustomValidity(mode === 'signup' && confirmPassword.value !== password.value ? 'Passwords do not match' : '');
   if (!form.checkValidity()) {
     form.classList.add('was-validated');
     return;
   }
   setLoading(true);
   try {
-    if (authMode === 'signup') await signUp(fullName.value.trim(), email.value.trim(), password.value);
-    else await signIn(email.value.trim(), password.value);
+    if (authMode === 'signup') {
+      const result = await signUp(fullName.value.trim(), email.value.trim(), password.value);
+      if (result.needsConfirmation) {
+        setLoading(false);
+        form.reset();
+        showMessage('Account created. Check your email and confirm your address before signing in.', 'success');
+        return;
+      }
+    } else await signIn(email.value.trim(), password.value);
     location.href = 'profile.html';
   } catch (error) {
     showMessage(error.message || 'We could not complete your request. Please try again.');
@@ -84,9 +94,10 @@ async function authenticate(authMode = mode) {
   }
 }
 
-tabs.login.addEventListener('click', () => setMode('login'));
-tabs.signup.addEventListener('click', () => setMode('signup'));
 password.addEventListener('input', updateStrength);
+confirmPassword.addEventListener('input', () => {
+  confirmPassword.setCustomValidity(confirmPassword.value === password.value ? '' : 'Passwords do not match');
+});
 document.querySelector('#show-password').addEventListener('click', event => {
   const showing = password.type === 'text';
   password.type = showing ? 'password' : 'text';
@@ -106,3 +117,5 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   authenticate();
 });
+
+if (new URLSearchParams(location.search).get('mode') === 'signup') setMode('signup');
