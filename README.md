@@ -2,7 +2,7 @@
 
 WellSpring is a responsive multi-page wellbeing app capstone. It combines focus sessions, healthy audio, active movement, herbs and tea rituals, private journaling, profiles, photo upload, authentication, roles, and an admin area.
 
-> Live application: [creative-faun-6ed755.netlify.app](https://creative-faun-6ed755.netlify.app)
+> Live application: [wellspring-health-app.netlify.app](https://wellspring-health-app.netlify.app)
 
 ## Highlights
 
