@@ -12,9 +12,9 @@ WellSpring is a responsive multi-page wellbeing app capstone. It combines focus 
 - Searchable herbs and tea guide with favorites and safety information
 - Full CRUD mood journal with persistent private reflections
 - Email/password authentication with email confirmation
-- Personal profile, progress dashboard, and profile-photo upload
+- Personal profile, progress dashboard, and private profile-photo upload/download
 - Protected member data using PostgreSQL Row Level Security
-- Role-based administrator area
+- Role-based administrator area with CRUD management for movement activities and the herbs guide
 - Responsive desktop and mobile navigation
 - Automated Playwright tests and GitHub Actions quality checks
 
@@ -84,6 +84,8 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
 Never place a secret or `service_role` key in frontend code.
+
+The production build includes only the browser-safe Supabase project URL and publishable key. Secret and `service_role` keys are never committed or exposed to the client.
 
 ## Quality assurance
 

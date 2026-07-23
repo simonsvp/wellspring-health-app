@@ -32,6 +32,15 @@ const guide = {
   }
 };
 
+const customHerbGuide = {
+  icon: 'bi-cup-hot',
+  steep: 'See directions',
+  temperature: 'Follow package',
+  taste: 'Herbal ritual',
+  safety: 'Herbs and supplements may cause allergies, side effects, or medicine interactions. Check the product label and ask a qualified healthcare professional when appropriate.',
+  source: 'https://www.nccih.nih.gov/health/using-dietary-supplements-wisely'
+};
+
 let favorites = new Set(JSON.parse(localStorage.getItem('wellspring-herb-favorites') || '[]').map(String));
 let query = '';
 
@@ -41,7 +50,7 @@ function saveFavorites() {
 
 function visibleHerbs() {
   return herbs.filter(herb => {
-    const info = guide[herb.name];
+    const info = guide[herb.name] || customHerbGuide;
     const matchesSearch = `${herb.name} ${herb.benefit} ${info?.taste || ''}`.toLowerCase().includes(query);
     const matchesFavorite = !favoritesOnly.checked || favorites.has(String(herb.id));
     return matchesSearch && matchesFavorite;
@@ -57,7 +66,7 @@ function draw() {
   }
 
   grid.innerHTML = visible.map(herb => {
-    const info = guide[herb.name];
+    const info = guide[herb.name] || customHerbGuide;
     const favorite = favorites.has(String(herb.id));
     return `
       <div class="col-md-6 col-xl-3">
