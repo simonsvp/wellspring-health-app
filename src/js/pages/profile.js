@@ -4,6 +4,9 @@ import { list } from '../services/data.js';
 import { isDemoMode } from '../config.js';
 import { supabase } from '../services/supabase.js';
 
+let avatarPath = null;
+let avatarSource = null;
+
 mountLayout();
 
 const user = await currentUser();
@@ -13,6 +16,8 @@ if (!user) {
   const nameInput = document.querySelector('#display-name');
   const intentionInput = document.querySelector('#wellness-intention');
   const avatar = document.querySelector('#avatar');
+  const downloadPhoto = document.querySelector('#download-photo');
+  avatarSource = user.user_metadata?.avatar_data || null;
   const name = user.user_metadata?.full_name || 'WellSpring member';
   let isAdmin = user.role === 'admin';
   if (!isDemoMode) {
@@ -27,7 +32,7 @@ if (!user) {
   document.querySelector('#admin-link').classList.toggle('d-none', !isAdmin);
   nameInput.value = name;
   intentionInput.value = user.user_metadata?.intention || '';
-  showAvatar(user.user_metadata?.avatar_data);
+  showAvatar(avatarSource);
   if (!isDemoMode) loadRemoteAvatar(user.id);
 
   document.querySelector('#profile-form').addEventListener('submit', async event => {
@@ -51,6 +56,7 @@ if (!user) {
     if (isDemoMode) {
       const avatarData = await readFile(file);
       await updateAccount({ avatar_data: avatarData });
+      avatarSource = avatarData;
       showAvatar(avatarData);
       toast('Profile photo saved');
       return;
@@ -65,18 +71,43 @@ if (!user) {
     }
     await supabase.from('profiles').update({ avatar_path: path }).eq('id', user.id);
     const { data } = await supabase.storage.from('avatars').createSignedUrl(path, 60 * 60);
+    avatarPath = path;
+    avatarSource = data?.signedUrl || null;
     showAvatar(data?.signedUrl);
     toast('Profile photo uploaded');
   });
 
+  downloadPhoto.addEventListener('click', downloadAvatar);
   loadProgress();
+
+  async function downloadAvatar() {
+    try {
+      if (isDemoMode) {
+        if (!avatarSource) return;
+        saveDownload(avatarSource, 'wellspring-profile-photo.png');
+        return;
+      }
+      if (!avatarPath) return;
+      const { data, error } = await supabase.storage.from('avatars').download(avatarPath);
+      if (error) throw error;
+      const objectUrl = URL.createObjectURL(data);
+      saveDownload(objectUrl, avatarPath.split('/').pop());
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    } catch (error) {
+      toast(error.message || 'Profile photo could not be downloaded.', 'danger');
+    }
+  }
 }
 
 async function loadRemoteAvatar(userId) {
   const { data: profile } = await supabase.from('profiles').select('avatar_path').eq('id', userId).maybeSingle();
   if (!profile?.avatar_path) return;
   const { data, error } = await supabase.storage.from('avatars').createSignedUrl(profile.avatar_path, 60 * 60);
-  if (!error) showAvatar(data.signedUrl);
+  if (!error) {
+    avatarPath = profile.avatar_path;
+    avatarSource = data.signedUrl;
+    showAvatar(data.signedUrl);
+  }
 }
 
 function showAvatar(source) {
@@ -86,6 +117,16 @@ function showAvatar(source) {
   image.src = source;
   image.alt = 'Profile photo';
   avatar.replaceChildren(image);
+  document.querySelector('#download-photo')?.classList.remove('d-none');
+}
+
+function saveDownload(source, filename) {
+  const link = document.createElement('a');
+  link.href = source;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 
 function readFile(file) {
